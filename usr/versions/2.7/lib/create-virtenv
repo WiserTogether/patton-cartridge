@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Utility function to create virtual environments
+
+function relative-virtenv {
+    # Clean the lib64->lib symlink
+    virtualenv --quiet --never-download --relocatable $VE_ROOT
+    # symlinks -r -c -s $OPENSHIFT_PYTHON_DIR/virtenv >/dev/null
+} # End of function  relative-virtenv.
+
+function create-virtenv {
+    # Initialize the virtual environment
+    mkdir -p $VE_ROOT
+    mkdir -p $VE_ROOT/.python-eggs/
+    virtualenv --quiet --never-download --system-site-packages $VE_ROOT
+
+    # Bug 995284
+    versions=( $(python -c 'import sys; print "%d %d.%d" % (sys.version_info[0], sys.version_info[0], sys.version_info[1])') )
+    for vers in "${versions[@]}"; do
+        [ -L $VE_ROOT/bin/python$vers ] || ln -s python $VE_ROOT/bin/python$vers
+    done
+
+    relative-virtenv
+}  #  End of function  create-virtenv.
+
+
+function remove-virtenv {
+    rm -rf $VE_ROOT/*
+    mkdir -p $VE_ROOT
+    mkdir -p $VE_ROOT/.python-eggs/
+}  #  End of function  remove-virtenv.

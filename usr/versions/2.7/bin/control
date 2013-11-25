@@ -1,0 +1,126 @@
+#!/bin/bash
+
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+source "${OPENSHIFT_PYTHON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/create-virtenv"
+source "${OPENSHIFT_PYTHON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/wisertogether-patton"
+
+
+SUPERVISORD="${VE_ROOT}/bin/supervisord -c ${OPENSHIFT_PYTHON_DIR}etc/supervisord.conf"
+SUPERVISORCTL="${VE_ROOT}/bin/supervisorctl"
+
+# For backwards compatibility
+export APPDIR=$OPENSHIFT_PYTHON_DIR
+
+function start() {
+
+    if is_running; then
+      echo "Application is already running!" 1>&2
+      return 0
+    fi
+
+    pushd $OPENSHIFT_REPO_DIR > /dev/null
+    . env.sh
+    create_supervisor_config
+    mkdir -p $OPENSHIFT_PATTON_RUN_DIR
+    $SUPERVISORD
+}
+
+
+function stop() {
+    echo "Stopping PYTHON cart"
+
+    if ! is_running; then
+      echo "Application is already stopped!" 1>&2
+      return 0
+    fi
+
+   pushd $OPENSHIFT_REPO_DIR > /dev/null
+     . env.sh
+     $SUPERVISORCTL shutdown
+}
+
+
+function restart() {
+    echo "Reloading supervisord"
+
+    # Update the supervsior configuration
+    create_supervisor_config
+    $SUPERVISORCTL reload
+}
+
+function status() {
+    if is_running; then
+        client_result "Application is running"
+    else
+        client_result "Application is either stopped or inaccessible"
+    fi
+}
+
+function reload() {
+    echo "Reloading PYTHON cart"
+    restart
+}
+
+# Clean up any log files
+function tidy() {
+  client_message "Emptying log dir: $OPENSHIFT_PATTON_LOG_DIR"
+  shopt -s dotglob
+  rm -rf $OPENSHIFT_PATTON_LOG_DIR/*
+}
+
+function build() {
+    if [ -n "$OPENSHIFT_PYPI_MIRROR_URL" ]; then
+        m=$OPENSHIFT_PYPI_MIRROR_URL
+        if curl -m 15 -f -s "$m" &>/dev/null
+        then
+            OPENSHIFT_PYTHON_MIRROR="-i $m"
+        fi
+    fi
+
+    if force_clean_build_enabled_for_latest_deployment; then
+        echo "Force-clean builds are enabled" 1>&2
+        remove-virtenv
+    fi
+
+    if [ ! -f $VIRTUAL_ENV/bin/python ]; then
+      echo "Recreating virtenv" 1>&2
+      create-virtenv
+    fi
+
+    # Install the app's modules based on its requirements.
+    #
+    if [ -f ${OPENSHIFT_REPO_DIR}/requirements.txt ]; then
+        cd $OPENSHIFT_REPO_DIR
+        pip install -r ${OPENSHIFT_REPO_DIR}/requirements.txt $OPENSHIFT_PYTHON_MIRROR
+    fi
+
+    if [ -f ${OPENSHIFT_REPO_DIR}/setup.py ]; then
+        cd $OPENSHIFT_REPO_DIR
+        python ${OPENSHIFT_REPO_DIR}/setup.py develop $OPENSHIFT_PYTHON_MIRROR
+    fi
+
+    relative-virtenv
+
+    complete_patton_build
+}
+
+function deploy() {
+    relative-virtenv
+    if is_running; then
+      restart
+    else
+      start
+    fi
+}
+
+case "$1" in
+  start)     start ;;
+  stop)      stop ;;
+  restart)   restart ;;
+  status)    status ;;
+  reload)    reload ;;
+  tidy)      tidy ;;
+  build)     build ;;
+  deploy)    deploy ;;
+  *)         exit 0
+esac

@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Called when a build is complete in the openshift universe and we are
+# ready for the wisertogether-specific build setps.
+function complete_patton_build() {
+
+  pushd "$OPENSHIFT_REPO_DIR" > /dev/null
+    if [ -f "env.sh" ]; then
+        . env.sh
+    fi
+
+    if [ -f "Makefile" ]; then
+        make
+    fi
+  popd  > /dev/null
+}  #  End of function  complete_patton_build.
+
+
+function create_supervisor_config() {
+  pushd "$OPENSHIFT_REPO_DIR" > /dev/null
+
+    mkdir -p $OPENSHIFT_PATTON_RUN_DIR
+
+    if [ -f "Procfile" ]; then
+      echo Creating supervisord.conf from Procfile
+      if honcho check --app-root ${OPENSHIFT_REPO_DIR} --procfile ${OPENSHIFT_REPO_DIR}Procfile 2> /dev/null; then
+       honcho export \
+       --app-root ${OPENSHIFT_REPO_DIR} \
+       --procfile ${OPENSHIFT_REPO_DIR}Procfile \
+       --log $OPENSHIFT_PATTON_LOG_DIR \
+       --port $OPENSHIFT_PATTON_PORT \
+       -a ${OPENSHIFT_APP_NAME}
+       supervisord ${OPENSHIFT_PYTHON_DIR}etc/supervisor.d/
+      fi
+    fi
+  popd  > /dev/null
+
+}  #  End of function  create_supervisor_config.
+
+
+function is_running() {
+   pushd $OPENSHIFT_REPO_DIR > /dev/null
+   if [ -w ${OPENSHIFT_PATTON_RUN_DIR}supervisor.sock ];
+   then
+    return 0
+   else
+  return 1
+   fi
+}  #  End of function  _is_running.
+

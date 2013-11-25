@@ -1,0 +1,27 @@
+[supervisord]
+childlogdir = <%= ENV['OPENSHIFT_PATTON_LOG_DIR'] %>
+logfile = <%= ENV['OPENSHIFT_PATTON_LOG_DIR'] %>supervisor.log
+logfile_maxbytes = 50MB
+logfile_backups = 10
+loglevel = info
+pidfile = <%= ENV['OPENSHIFT_PATTON_RUN_DIR'] %>supervisor.pid
+umask = 022
+nodaemon = false
+nocleanup = false
+
+[unix_http_server]
+file = <%= ENV['OPENSHIFT_PATTON_RUN_DIR'] %>supervisor.sock
+username = admin
+password = admin
+chmod = 0700
+
+[supervisorctl]
+serverurl = unix://<%= ENV['OPENSHIFT_PATTON_RUN_DIR'] %>supervisor.sock
+username = admin
+password = admin
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[include]
+files = <%= ENV['OPENSHIFT_PATTON_SUPERVISOR_CONF_DIR'] %>*.conf <%= ENV['OPENSHIFT_REPO_DIR'] %>etc/supervisor.d/*.conf

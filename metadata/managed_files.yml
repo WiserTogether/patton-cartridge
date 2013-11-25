@@ -1,0 +1,19 @@
+---
+locked_files:
+- bin/
+- bin/*
+- etc/
+- etc/supervisord.conf
+- hooks/
+- hooks/*
+- metadata/
+- metadata/*
+- env/
+- env/OPENSHIFT_PATTON_LOG_DIR
+- env/OPENSHIFT_PYTHON_DIR
+- env/OPENSHIFT_PATTON_DIR
+- env/OPENSHIFT_PATTON_SUPERVISOR_CONF_DIR
+processed_templates:
+- '**/*.erb'
+dependency_dirs:
+- virtenv

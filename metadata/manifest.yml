@@ -1,0 +1,110 @@
+---
+Name: patton-framework
+Cartridge-Short-Name: PATTON
+Display-Name: Patton Framework (Python 2.7)
+Description: ! 'Patton provides support Python using supervisord, honcho, and custom virtualenv support. This differs from the default RedHat design using apache+wsgi.'
+Version: '2.7'
+Versions:
+- '2.7'
+- '3.3'
+License: The Python License, version 2.7
+License-Url: http://docs.python.org/3/license.html
+Vendor: python.org
+Cartridge-Version: 1.0
+Compatible-Versions: []
+Cartridge-Vendor: wisertogether
+Categories:
+- service
+- python
+- web_framework
+- community
+Website: http://www.python.org
+Help-Topics:
+  Developer Center: https://www.openshift.com/developers
+  WiserTogether Patton: https://github.com/WiserTogether/patton/docs
+Cart-Data:
+- Key: OPENSHIFT_TMP_DIR
+  Type: environment
+  Description: Directory to store application temporary files.
+- Key: OPENSHIFT_REPO_DIR
+  Type: environment
+  Description: Application root directory where application files reside. This directory is reset every time you do a git-push
+- Key: OPENSHIFT_PATTON_PORT
+  Type: environment
+  Description: Internal port to which the web-framework binds to.
+- Key: OPENSHIFT_PATTON_IP
+  Type: environment
+  Description: Internal IP to which the web-framework binds to.
+- Key: OPENSHIFT_APP_DNS
+  Type: environment
+  Description: Fully qualified domain name for the application.
+- Key: OPENSHIFT_APP_NAME
+  Type: environment
+  Description: Application name
+- Key: OPENSHIFT_DATA_DIR
+  Type: environment
+  Description: Directory to store application data files. Preserved across git-pushes.
+    Not shared across gears.
+- Key: OPENSHIFT_APP_UUID
+  Type: environment
+  Description: Unique ID which identified the application. Does not change between
+    gears.
+- Key: OPENSHIFT_GEAR_UUID
+  Type: environment
+  Description: Unique ID which identified the gear. This value changes between gears.
+Provides:
+- patton
+- python-2.7
+- python
+- python(version) = 2.7
+Publishes:
+Subscribes:
+  set-env:
+    Type: ENV:*
+    Required: false
+  set-doc-url:
+    Type: STRING:urlpath
+    Required: false
+  set-mysql-connection-info:
+    Type: "NET_TCP:db:mysql"
+    Required : false
+  set-postgres-connection-info:
+    Type: "NET_TCP:db:postgres"
+    Required : false
+Scaling:
+  Min: 1
+  Max: -1
+Endpoints:
+- Private-IP-Name: IP
+  Private-Port-Name: PORT
+  Private-Port: 8080
+  Public-Port-Name: PROXY_PORT
+  Protocols:
+  - http
+  - ws
+  Options:
+    primary: true
+  Mappings:
+  - Frontend: ''
+    Backend: ''
+    Options:
+      websocket: true
+  - Frontend: /health
+    Backend: ''
+    Options:
+      health: true
+Version-Overrides:
+  '3.3':
+    Display-Name: Patton Framework (Python 3.3)
+    License: The Python License, version 3.3
+    Provides:
+    - patton
+    - python-3.3
+    - python
+    - python(version) = 3.3
+    Categories:
+    - service
+    - python
+    - web_framework
+    - community
+Install-Build-Required: false
