@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Make sure the USER environment variable is set. Honcho needs it
+# and if it isn't set by openshift, then honcho gets very, very
+# angry.
+
+function ensure_user_env_var() {
+  if [[ "x${USER}x" == "xx" ]]; then
+    USER=`id -un`
+    export USER
+  fi
+}  #  End of function  ensure_user_env_var.
+
 # Called when a build is complete in the openshift universe and we are
 # ready for the wisertogether-specific build setps.
 function complete_patton_build() {
@@ -21,17 +32,22 @@ function create_supervisor_config() {
 
     mkdir -p $OPENSHIFT_PATTON_RUN_DIR
 
+    ensure_user_env_var
+
     if [ -f "Procfile" ]; then
-      echo Creating supervisord.conf from Procfile
-      if honcho check --app-root ${OPENSHIFT_REPO_DIR} --procfile ${OPENSHIFT_REPO_DIR}Procfile 2> /dev/null; then
+      honcho check --app-root ${OPENSHIFT_REPO_DIR} --procfile ${OPENSHIFT_REPO_DIR}Procfile 2> /dev/null
+      if [[ $? == 0 ]]; then
+
+       echo Creating supervisord.conf from Procfile
+
        honcho export \
-       --app-root ${OPENSHIFT_REPO_DIR} \
-       --procfile ${OPENSHIFT_REPO_DIR}Procfile \
-       --log $OPENSHIFT_PATTON_LOG_DIR \
-       --port $OPENSHIFT_PATTON_PORT \
-       -a ${OPENSHIFT_APP_NAME}
-       supervisord ${OPENSHIFT_PYTHON_DIR}etc/supervisor.d/
-      fi
+         --app-root ${OPENSHIFT_REPO_DIR} \
+         --procfile ${OPENSHIFT_REPO_DIR}Procfile \
+         --log $OPENSHIFT_PATTON_LOG_DIR \
+         --port $OPENSHIFT_PATTON_PORT \
+         -a ${OPENSHIFT_APP_NAME} \
+         supervisord ${OPENSHIFT_PYTHON_DIR}etc/supervisor.d/
+     fi
     fi
   popd  > /dev/null
 
