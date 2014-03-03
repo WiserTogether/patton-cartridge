@@ -12,7 +12,7 @@ function create-virtenv {
     # Initialize the virtual environment
     mkdir -p $VE_ROOT
     mkdir -p $VE_ROOT/.python-eggs/
-    virtualenv --quiet --never-download --system-site-packages $VE_ROOT
+    virtualenv --quiet --never-download $VE_ROOT
 
     # Bug 995284
     versions=( $(python -c 'import sys; print "%d %d.%d" % (sys.version_info[0], sys.version_info[0], sys.version_info[1])') )
