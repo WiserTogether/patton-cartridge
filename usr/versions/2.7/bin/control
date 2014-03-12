@@ -19,7 +19,7 @@ function start() {
     fi
 
     pushd $OPENSHIFT_REPO_DIR > /dev/null
-    . env.sh
+    source env.sh
     create_supervisor_config
     mkdir -p $OPENSHIFT_PATTON_RUN_DIR
 
@@ -45,18 +45,8 @@ function stop() {
 
 
 function restart() {
-
-    if ! is_running; then
-      echo "Cannot restart; the supervisor is not running." 1>&2
-      return 0
-    fi
-
-    echo "Reloading supervisord."
-
-    # Update the supervsior configuration before reloading
-    pushd $OPENSHIFT_REPO_DIR > /dev/null
-      create_supervisor_config
-      $SUPERVISORCTL reload
+  stop
+  start
 }
 
 function status() {
@@ -69,7 +59,17 @@ function status() {
 
 function reload() {
     echo "Reloading the application."
-    restart
+    if ! is_running; then
+      echo "Cannot restart; the supervisor is not running." 1>&2
+      return 0
+    fi
+
+    echo "Reloading supervisord."
+
+    # Update the supervsior configuration before reloading
+    pushd $OPENSHIFT_REPO_DIR > /dev/null
+      create_supervisor_config
+      $SUPERVISORCTL reload
 }
 
 # Clean up any log files
