@@ -100,15 +100,15 @@ function build() {
 
     # Install the app's modules based on its requirements.
     #
-    if [ -f ${OPENSHIFT_REPO_DIR}/requirements.txt ]; then
-        cd $OPENSHIFT_REPO_DIR
-        pip install -r ${OPENSHIFT_REPO_DIR}/requirements.txt $OPENSHIFT_PYTHON_MIRROR
-    fi
+    # if [ -f ${OPENSHIFT_REPO_DIR}/requirements.txt ]; then
+    #     cd $OPENSHIFT_REPO_DIR
+    #     pip install -r ${OPENSHIFT_REPO_DIR}/requirements.txt $OPENSHIFT_PYTHON_MIRROR
+    # fi
 
-    if [ -f ${OPENSHIFT_REPO_DIR}/setup.py ]; then
-        cd $OPENSHIFT_REPO_DIR
-        python ${OPENSHIFT_REPO_DIR}/setup.py develop $OPENSHIFT_PYTHON_MIRROR
-    fi
+    # if [ -f ${OPENSHIFT_REPO_DIR}/setup.py ]; then
+    #     cd $OPENSHIFT_REPO_DIR
+    #     python ${OPENSHIFT_REPO_DIR}/setup.py develop $OPENSHIFT_PYTHON_MIRROR
+    # fi
 
     relative-virtenv
 

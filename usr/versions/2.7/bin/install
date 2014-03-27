@@ -22,3 +22,8 @@ fi
 cd $OPENSHIFT_REPO_DIR
 pip install -r ${OPENSHIFT_PYTHON_DIR}/usr/versions/$version/lib/patton_requirements.txt
 
+# install additional packages
+if [ -f $OPENSHIFT_PYTHON_DIR/bin/install_additional ]
+then
+    source $OPENSHIFT_PYTHON_DIR/bin/install_additional
+fi

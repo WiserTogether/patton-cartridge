@@ -21,3 +21,10 @@ source "${OPENSHIFT_PYTHON_DIR}/usr/versions/$version/lib/utils"
 create_virtualenv
 
 create_virtenv_activate_file
+
+
+# install additional packages
+if [ -f $OPENSHIFT_PYTHON_DIR/bin/install_additional ]
+then
+    source $OPENSHIFT_PYTHON_DIR/bin/install_additional
+fi
