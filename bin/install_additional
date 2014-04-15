@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+# install xmlsec1 package
+if [ -f $OPENSHIFT_PYTHON_DIR/bin/install_xmlsec ]
+then
+    source $OPENSHIFT_PYTHON_DIR/bin/install_xmlsec
+fi
+
+# install python precompiled packages
+if [ -d "$OPENSHIFT_PYTHON_DIR/usr/python_packages/" ]
+then
+    for i in $OPENSHIFT_PYTHON_DIR/usr/python_packages/*.egg
+    do
+      if [ -r "$i" ]
+      then
+        easy_install $i
+      fi
+    done 
+    unset i
+fi
