@@ -4,26 +4,26 @@ version="$1"
 
 # Copy the version specific files to python directory
 shopt -s dotglob
-cp -r $OPENSHIFT_PYTHON_DIR/usr/versions/$version/template/* $OPENSHIFT_PYTHON_DIR/template
+cp -r $OPENSHIFT_PATTON_DIR/usr/versions/$version/template/* $OPENSHIFT_PYTHON_DIR/template
 
 # Create run directory
 mkdir -p $OPENSHIFT_PATTON_RUN_DIR
 
 # The virtual environment is assumed to exist going forward
-if [ ! -f $OPENSHIFT_PYTHON_DIR/virtenv/bin/python ]
+if [ ! -f $OPENSHIFT_PATTON_DIR/virtenv/bin/python ]
 then
-    source $OPENSHIFT_PYTHON_DIR/usr/versions/$version/lib/python-context
+    source $OPENSHIFT_PATTON_DIR/usr/versions/$version/lib/python-context
     python-context-stdin <<EOF
-source $OPENSHIFT_PYTHON_DIR/usr/versions/$version/lib/create-virtenv
+source $OPENSHIFT_PATTON_DIR/usr/versions/$version/lib/create-virtenv
 create-virtenv
 EOF
 fi
 
 cd $OPENSHIFT_REPO_DIR
-pip install -r ${OPENSHIFT_PYTHON_DIR}/usr/versions/$version/lib/patton_requirements.txt
+pip install -r ${OPENSHIFT_PATTON_DIR}/usr/versions/$version/lib/patton_requirements.txt
 
 # install additional packages
-if [ -f $OPENSHIFT_PYTHON_DIR/bin/install_additional ]
+if [ -f $OPENSHIFT_PATTON_DIR/bin/install_additional ]
 then
-    source $OPENSHIFT_PYTHON_DIR/bin/install_additional
+    source $OPENSHIFT_PATTON_DIR/bin/install_additional
 fi

@@ -1,15 +1,15 @@
 #!/bin/bash
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
-source "${OPENSHIFT_PYTHON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/create-virtenv"
-source "${OPENSHIFT_PYTHON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/wisertogether-patton"
+source "${OPENSHIFT_PATTON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/create-virtenv"
+source "${OPENSHIFT_PATTON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/wisertogether-patton"
 
 
-SUPERVISORD="${VE_ROOT}/bin/supervisord -c ${OPENSHIFT_PYTHON_DIR}etc/supervisord.conf"
-SUPERVISORCTL="${VE_ROOT}/bin/supervisorctl  -c ${OPENSHIFT_PYTHON_DIR}etc/supervisord.conf"
+SUPERVISORD="${VE_ROOT}/bin/supervisord -c ${OPENSHIFT_PATTON_DIR}etc/supervisord.conf"
+SUPERVISORCTL="${VE_ROOT}/bin/supervisorctl  -c ${OPENSHIFT_PATTON_DIR}etc/supervisord.conf"
 
 # For backwards compatibility
-export APPDIR=$OPENSHIFT_PYTHON_DIR
+export APPDIR=$OPENSHIFT_PATTON_DIR
 
 function start() {
 
