@@ -11,8 +11,7 @@ function update-configuration {
     echo "$OPENSHIFT_PATTON_DIR/virtenv/bin:$OPENSHIFT_PATTON_DIR/bin:${sclpath}" > $OPENSHIFT_PATTON_DIR/env/OPENSHIFT_PATTON_PATH_ELEMENT
 
     local ld_path=$(LD_LIBRARY_PATH="" scl enable python27 "printenv LD_LIBRARY_PATH")
-    path_append ${LD_LIBRARY_PATH:-:} ${ld_path:-:} > $OPENSHIFT_PATTON_DIR/env/LD_LIBRARY_PATH
-    set_env_var 'OPENSHIFT_PYTHON_LD_LIBRARY_PATH_ELEMENT' $ld_path $env_dir
+    set_env_var 'OPENSHIFT_PATTON_LD_LIBRARY_PATH_ELEMENT' $ld_path $env_dir
 
     local man_path=$(MANPATH="" scl enable python27 "printenv MANPATH")
     path_append ${MANPATH:-:} ${man_path:-:} > $OPENSHIFT_PATTON_DIR/env/MANPATH
