@@ -28,6 +28,7 @@ function start() {
 
     # Then start it up
     $SUPERVISORD
+    popd
 }
 
 
@@ -40,7 +41,9 @@ function stop() {
 
    pushd $OPENSHIFT_REPO_DIR > /dev/null
      echo "Shutting down the supervisor."
+     source env.sh
      $SUPERVISORCTL shutdown
+   popd
 }
 
 
@@ -70,6 +73,7 @@ function reload() {
     pushd $OPENSHIFT_REPO_DIR > /dev/null
       create_supervisor_config
       $SUPERVISORCTL reload
+    popd
 }
 
 # Clean up any log files
@@ -98,17 +102,12 @@ function build() {
       create-virtenv
     fi
 
-    # Install the app's modules based on its requirements.
-    #
-    # if [ -f ${OPENSHIFT_REPO_DIR}/requirements.txt ]; then
-    #     cd $OPENSHIFT_REPO_DIR
-    #     pip install -r ${OPENSHIFT_REPO_DIR}/requirements.txt $OPENSHIFT_PYTHON_MIRROR
-    # fi
-
-    # if [ -f ${OPENSHIFT_REPO_DIR}/setup.py ]; then
-    #     cd $OPENSHIFT_REPO_DIR
-    #     python ${OPENSHIFT_REPO_DIR}/setup.py develop $OPENSHIFT_PYTHON_MIRROR
-    # fi
+    pushd $OPENSHIFT_REPO_DIR > /dev/null
+        if [[ -f "env.sh" && -f "Makefile" ]]; then 
+            source env.sh
+            make 
+        fi
+    popd
 
     relative-virtenv
 
@@ -116,12 +115,10 @@ function build() {
 }
 
 function deploy() {
-    relative-virtenv
     if is_running; then
-      restart
-    else
-      start
+      stop
     fi
+    start
 }
 
 case "$1" in

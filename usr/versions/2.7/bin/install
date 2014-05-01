@@ -19,11 +19,7 @@ create-virtenv
 EOF
 fi
 
-cd $OPENSHIFT_REPO_DIR
+pushd $OPENSHIFT_REPO_DIR
 pip install -r ${OPENSHIFT_PATTON_DIR}/usr/versions/$version/lib/patton_requirements.txt
+popd
 
-# install additional packages
-if [ -f $OPENSHIFT_PATTON_DIR/bin/install_additional ]
-then
-    source $OPENSHIFT_PATTON_DIR/bin/install_additional
-fi
