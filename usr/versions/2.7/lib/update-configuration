@@ -8,7 +8,7 @@ function update-configuration {
     # SCL installs of python 2.7
     env_dir="${OPENSHIFT_PATTON_DIR}/env"
     sclpath=$(dirname $(scl enable python27 "which python"))
-    rpmpath=${OPENSHIFT_PATTON_DIR}usr/local
+    rpmpath=${OPENSHIFT_PATTON_DIR}usr
     echo "$OPENSHIFT_PATTON_DIR/virtenv/bin:$rpmpath/bin:${sclpath}" > $env_dir/OPENSHIFT_PATTON_PATH_ELEMENT
 
     local ld_path=$(LD_LIBRARY_PATH="" scl enable python27 "printenv LD_LIBRARY_PATH"):${rpmpath}/lib/lib64
