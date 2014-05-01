@@ -11,22 +11,6 @@ function ensure_user_env_var() {
   fi
 }  #  End of function  ensure_user_env_var.
 
-# Called when a build is complete in the openshift universe and we are
-# ready for the wisertogether-specific build setps.
-function complete_patton_build() {
-
-  pushd "$OPENSHIFT_REPO_DIR" > /dev/null
-    if [ -f "env.sh" ]; then
-        . env.sh
-    fi
-
-    if [ -f "Makefile" ]; then
-        make
-    fi
-  popd  > /dev/null
-}  #  End of function  complete_patton_build.
-
-
 function create_supervisor_config() {
   pushd "$OPENSHIFT_REPO_DIR" > /dev/null
 
