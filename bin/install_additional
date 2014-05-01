@@ -15,8 +15,7 @@ fi
 
 # install system rpms to $OPENSHIFT_PATTON_DIR/usr/local
 function install_rpm() {
-    mkdir -p ${OPENSHIFT_PATTON_DIR}usr/local
-    pushd ${OPENSHIFT_PATTON_DIR}usr/local
+    pushd ${OPENSHIFT_PATTON_DIR}
     curl $1 | rpm2cpio | cpio -idmv
     popd
 }
