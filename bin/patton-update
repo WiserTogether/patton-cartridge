@@ -11,4 +11,5 @@ for f in $OPENSHIFT_PATTON_DIR/env/*.erb; do
     fi
 done
 popd
-exec bin/install --version 2.7
+bin/setup --version 2.7
+bin/install --version 2.7
