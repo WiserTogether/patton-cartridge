@@ -1,6 +1,6 @@
 #!/bin/sh
 pushd $OPENSHIFT_PATTON_DIR
-curl -L  https://github.com/WiserTogether/patton-cartridge/archive/rhel.tar.gz | tar -xvz --strip-components=1
+curl -L  https://github.com/WiserTogether/patton-cartridge/archive/rhel.tar.gz | tar -xz --strip-components=1
 # Need the environment ERBs rendered at this point
 for f in $OPENSHIFT_PATTON_DIR/env/*.erb; do
     if [ -f "$f" ]; then
