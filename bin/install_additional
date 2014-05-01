@@ -1,11 +1,5 @@
 #!/bin/bash -e
 
-# install xmlsec1 package
-if [ -f $OPENSHIFT_PYTHON_DIR/bin/install_xmlsec ]
-then
-    source $OPENSHIFT_PYTHON_DIR/bin/install_xmlsec
-fi
-
 # install python precompiled packages
 if [ -d "$OPENSHIFT_PYTHON_DIR/usr/python_packages/" ]
 then
@@ -18,3 +12,13 @@ then
     done 
     unset i
 fi
+
+# install system rpms to $OPENSHIFT_PATTON_DIR/usr/local
+function install_rpm() {
+    mkdir -p ${OPENSHIFT_PATTON_DIR}usr/local
+    pushd $OPENSHIFT_PATTON_DIRusr/local
+    curl $1 | rpm2cpio | cpio -idmv
+    popd
+}
+
+install_rpm "http://dl.fedoraproject.org/pub/epel/6/x86_64/xmlsec1-1.2.16-2.el6.x86_64.rpm"

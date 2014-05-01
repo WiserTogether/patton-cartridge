@@ -15,4 +15,4 @@ mkdir -p ${OPENSHIFT_PATTON_DIR}template
 exec ${OPENSHIFT_PATTON_DIR}usr/versions/${version}/bin/install $version
 
 # Install additional libraries
-# exec ${OPENSHIFT_PATTON_DIR}bin/install_additional
+exec ${OPENSHIFT_PATTON_DIR}bin/install_additional

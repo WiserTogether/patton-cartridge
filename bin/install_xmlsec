@@ -1,8 +1,0 @@
-#!/bin/bash
-XMLSEC_RPM_URL=http://dl.fedoraproject.org/pub/epel/6/x86_64/xmlsec1-1.2.16-2.el6.x86_64.rpm
-
-mkdir -p ${OPENSHIFT_PATTON_DIR}usr/local
-pushd $OPENSHIFT_PATTON_DIR
-curl $XMLSEC_RPM_URL | rpm2cpio | cpio -idmv
-popd
-
