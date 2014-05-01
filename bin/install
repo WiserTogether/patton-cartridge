@@ -11,8 +11,9 @@ echo "$version" > ${OPENSHIFT_PATTON_DIR}env/OPENSHIFT_PYTHON_VERSION
 
 mkdir -p ${OPENSHIFT_PATTON_DIR}template
 
+# Install additional libraries
+${OPENSHIFT_PATTON_DIR}bin/install_additional
+
 # Call the version specific install script
 exec ${OPENSHIFT_PATTON_DIR}usr/versions/${version}/bin/install $version
 
-# Install additional libraries
-exec ${OPENSHIFT_PATTON_DIR}bin/install_additional
