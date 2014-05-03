@@ -91,6 +91,12 @@ function build() {
       create-virtenv
     fi
 
+    pushd $OPENSHIFT_REPO_DIR/.openshift/action_hooks > /dev/null
+        if [[ -f "fetch_dependencies" ]]; then 
+            source fetch_dependencies
+        fi
+    popd
+
     relative-virtenv
 }
 
