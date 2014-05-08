@@ -1,0 +1,15 @@
+#!/bin/sh
+pushd $OPENSHIFT_PATTON_DIR
+curl -L  https://github.com/WiserTogether/patton-cartridge/archive/rhel.tar.gz | tar -xz --strip-components=1
+# Need the environment ERBs rendered at this point
+for f in $OPENSHIFT_PATTON_DIR/env/*.erb; do
+    if [ -f "$f" ]; then
+        d=$(basename "$f" .erb)
+        p=$(dirname "$f")
+        /usr/bin/oo-erb -S 2 -- "$f" > "$p/$d"
+        rm -f "$f"
+    fi
+done
+popd
+${OPENSHIFT_PATTON_DIR}bin/setup --version 2.7
+${OPENSHIFT_PATTON_DIR}bin/install --version 2.7

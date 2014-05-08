@@ -1,15 +1,15 @@
 #!/bin/bash
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
-source "${OPENSHIFT_PYTHON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/create-virtenv"
-source "${OPENSHIFT_PYTHON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/wisertogether-patton"
+source "${OPENSHIFT_PATTON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/create-virtenv"
+source "${OPENSHIFT_PATTON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/wisertogether-patton"
 
 
-SUPERVISORD="${VE_ROOT}/bin/supervisord -c ${OPENSHIFT_PYTHON_DIR}etc/supervisord.conf"
-SUPERVISORCTL="${VE_ROOT}/bin/supervisorctl  -c ${OPENSHIFT_PYTHON_DIR}etc/supervisord.conf"
+SUPERVISORD="${VE_ROOT}/bin/supervisord -c ${OPENSHIFT_PATTON_DIR}etc/supervisord.conf"
+SUPERVISORCTL="${VE_ROOT}/bin/supervisorctl  -c ${OPENSHIFT_PATTON_DIR}etc/supervisord.conf"
 
 # For backwards compatibility
-export APPDIR=$OPENSHIFT_PYTHON_DIR
+export APPDIR=$OPENSHIFT_PATTON_DIR
 
 function start() {
 
@@ -19,15 +19,16 @@ function start() {
     fi
 
     pushd $OPENSHIFT_REPO_DIR > /dev/null
-    source env.sh
-    create_supervisor_config
-    mkdir -p $OPENSHIFT_PATTON_RUN_DIR
+        source env.sh
+        create_supervisor_config
+        mkdir -p $OPENSHIFT_PATTON_RUN_DIR
 
-    # Make sure supervisor is dead
-    $SUPERVISORCTL shutdown
+        # Make sure supervisor is dead
+        $SUPERVISORCTL shutdown
 
-    # Then start it up
-    $SUPERVISORD
+        # Then start it up
+        $SUPERVISORD
+    popd
 }
 
 
@@ -40,7 +41,9 @@ function stop() {
 
    pushd $OPENSHIFT_REPO_DIR > /dev/null
      echo "Shutting down the supervisor."
+     source env.sh
      $SUPERVISORCTL shutdown
+   popd
 }
 
 
@@ -58,18 +61,8 @@ function status() {
 }
 
 function reload() {
-    echo "Reloading the application."
-    if ! is_running; then
-      echo "Cannot restart; the supervisor is not running." 1>&2
-      return 0
-    fi
-
-    echo "Reloading supervisord."
-
-    # Update the supervsior configuration before reloading
-    pushd $OPENSHIFT_REPO_DIR > /dev/null
-      create_supervisor_config
-      $SUPERVISORCTL reload
+    stop
+    start
 }
 
 # Clean up any log files
@@ -98,30 +91,20 @@ function build() {
       create-virtenv
     fi
 
-    # Install the app's modules based on its requirements.
-    #
-    # if [ -f ${OPENSHIFT_REPO_DIR}/requirements.txt ]; then
-    #     cd $OPENSHIFT_REPO_DIR
-    #     pip install -r ${OPENSHIFT_REPO_DIR}/requirements.txt $OPENSHIFT_PYTHON_MIRROR
-    # fi
-
-    # if [ -f ${OPENSHIFT_REPO_DIR}/setup.py ]; then
-    #     cd $OPENSHIFT_REPO_DIR
-    #     python ${OPENSHIFT_REPO_DIR}/setup.py develop $OPENSHIFT_PYTHON_MIRROR
-    # fi
+    pushd $OPENSHIFT_REPO_DIR/.openshift/action_hooks > /dev/null
+        if [[ -f "fetch_dependencies" ]]; then 
+            source fetch_dependencies
+        fi
+    popd
 
     relative-virtenv
-
-    complete_patton_build
 }
 
 function deploy() {
-    relative-virtenv
     if is_running; then
-      restart
-    else
-      start
+      stop
     fi
+    start
 }
 
 case "$1" in

@@ -1,11 +1,5 @@
 #!/bin/bash -e
 
-# install xmlsec1 package
-if [ -f $OPENSHIFT_PYTHON_DIR/bin/install_xmlsec ]
-then
-    source $OPENSHIFT_PYTHON_DIR/bin/install_xmlsec
-fi
-
 # install python precompiled packages
 if [ -d "$OPENSHIFT_PYTHON_DIR/usr/python_packages/" ]
 then
@@ -13,8 +7,26 @@ then
     do
       if [ -r "$i" ]
       then
-        easy_install $i
+        ${VE_ROOT}bin/easy_install $i
       fi
     done 
     unset i
 fi
+
+# install system rpms to $OPENSHIFT_PATTON_DIR/usr/local
+function install_rpm() {
+    pushd .
+    cd ${OPENSHIFT_PATTON_DIR}
+    curl $1 | rpm2cpio | cpio -idmv
+    popd
+}
+
+install_rpm "http://dl.fedoraproject.org/pub/epel/6/x86_64/xmlsec1-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gcrypt-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gnutls-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-nss-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-openssl-1.2.16-2.el6.x86_64.rpm"
+ln -sf libxmlsec1-nss.so.1 ${OPENSHIFT_PATTON_DIR}/usr/lib64/libxmlsec1-nss.so
+ln -sf libxmlsec1-gnutls.so.1 ${OPENSHIFT_PATTON_DIR}/usr/lib64/libxmlsec1-gnutls.so
+ln -sf libxmlsec1-gcrypt ${OPENSHIFT_PATTON_DIR}/usr/lib64/libxmlsec1-gcrypt.so
+ln -sf libxmlsec1-openssl.so.1 ${OPENSHIFT_PATTON_DIR}/usr/lib64/libxmlsec1-openssl.so

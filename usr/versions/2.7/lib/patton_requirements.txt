@@ -4,3 +4,4 @@ honcho==0.4.2
 meld3==0.6.10
 supervisor==3.0
 wsgiref==0.1.2
+pip==1.5.4

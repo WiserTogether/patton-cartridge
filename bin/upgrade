@@ -5,11 +5,11 @@ curr=$2
 next=$3
 
 if [[ $curr =~ ^0.0.1[23]$ ]]; then
-    chown $OPENSHIFT_GEAR_UUID:$OPENSHIFT_GEAR_UUID ${OPENSHIFT_PYTHON_DIR}etc/conf.d/openshift.conf
-    chcon -u unconfined_u ${OPENSHIFT_PYTHON_DIR}etc/conf.d/openshift.conf
+    chown $OPENSHIFT_GEAR_UUID:$OPENSHIFT_GEAR_UUID ${OPENSHIFT_PATTON_DIR}etc/conf.d/openshift.conf
+    chcon -u unconfined_u ${OPENSHIFT_PATTON_DIR}etc/conf.d/openshift.conf
 fi
 
-upgrade_script="${OPENSHIFT_PYTHON_DIR}usr/versions/${python_version}/bin/upgrade"
+upgrade_script="${OPENSHIFT_PATTON_DIR}usr/versions/${python_version}/bin/upgrade"
 
 if [ -e "$upgrade_script" ]; then
     exec "$upgrade_script" "$@"
@@ -21,8 +21,8 @@ fi
 # take the precedence.
 #
 if [[ $next == "0.0.13" ]]; then
-  if [ -f ${OPENSHIFT_PYTHON_DIR}env/LD_LIBRARY_PATH ]; then
-    rm -f ${OPENSHIFT_PYTHON_DIR}env/LD_LIBRARY_PATH
+  if [ -f ${OPENSHIFT_PATTON_DIR}env/LD_LIBRARY_PATH ]; then
+    rm -f ${OPENSHIFT_PATTON_DIR}env/LD_LIBRARY_PATH
   fi
 fi
 

@@ -4,5 +4,5 @@ version="$1"
 
 # Copy the version specific files to python directory
 shopt -s dotglob
-cp -rf $OPENSHIFT_PYTHON_DIR/usr/versions/$version/etc/* $OPENSHIFT_PYTHON_DIR/etc
-cp -rf $OPENSHIFT_PYTHON_DIR/usr/versions/$version/metadata/* $OPENSHIFT_PYTHON_DIR/metadata
+cp -rf $OPENSHIFT_PATTON_DIR/usr/versions/$version/etc/* $OPENSHIFT_PATTON_DIR/etc
+cp -rf $OPENSHIFT_PATTON_DIR/usr/versions/$version/metadata/* $OPENSHIFT_PATTON_DIR/metadata
