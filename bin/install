@@ -2,10 +2,12 @@
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-case "$1" in
-    -v|--version)
-      version="$2"
-esac
+#case "$1" in
+#    -v|--version)
+#      version="$2"
+#esac
+
+version="2.7"
 
 echo "$version" > ${OPENSHIFT_PATTON_DIR}env/OPENSHIFT_PYTHON_VERSION
 
