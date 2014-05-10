@@ -7,7 +7,7 @@ then
     do
       if [ -r "$i" ]
       then
-        ${VE_ROOT}bin/easy_install $i
+        ${VE_ROOT}/bin/easy_install $i
       fi
     done 
     unset i
