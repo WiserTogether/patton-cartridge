@@ -21,12 +21,13 @@ function install_rpm() {
     popd
 }
 
-install_rpm "http://dl.fedoraproject.org/pub/epel/6/x86_64/xmlsec1-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-devel-1.2.16-2.el6.x86_64.rpm"
 install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gcrypt-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gcrypt-devel-1.2.16-2.el6.x86_64.rpm"
 install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gnutls-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gnutls-devel-1.2.16-2.el6.x86_64.rpm"
 install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-nss-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-nss-devel-1.2.16-2.el6.x86_64.rpm"
 install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-openssl-1.2.16-2.el6.x86_64.rpm"
-ln -sf libxmlsec1-nss.so.1 ${OPENSHIFT_PATTON_DIR}/usr/lib64/libxmlsec1-nss.so
-ln -sf libxmlsec1-gnutls.so.1 ${OPENSHIFT_PATTON_DIR}/usr/lib64/libxmlsec1-gnutls.so
-ln -sf libxmlsec1-gcrypt ${OPENSHIFT_PATTON_DIR}/usr/lib64/libxmlsec1-gcrypt.so
-ln -sf libxmlsec1-openssl.so.1 ${OPENSHIFT_PATTON_DIR}/usr/lib64/libxmlsec1-openssl.so
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-openssl-devel-1.2.16-2.el6.x86_64.rpm"
