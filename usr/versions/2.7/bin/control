@@ -13,36 +13,24 @@ export APPDIR=$OPENSHIFT_PATTON_DIR
 
 function start() {
 
-    if is_running; then
-      echo "The patton-based application appears to be running already." 1>&2
-      return 0
-    fi
-
     pushd $OPENSHIFT_REPO_DIR > /dev/null
         source env.sh
         create_supervisor_config
         mkdir -p $OPENSHIFT_PATTON_RUN_DIR
 
-        # Make sure supervisor is dead
-        $SUPERVISORCTL shutdown
+        # Start all workers
+        $SUPERVISORCTL start all
 
-        # Then start it up
-        $SUPERVISORD
     popd
 }
 
 
 function stop() {
 
-    if ! is_running; then
-      echo "The patton-based application appears to be stopped already." 1>&2
-      return 0
-    fi
-
    pushd $OPENSHIFT_REPO_DIR > /dev/null
      echo "Shutting down the supervisor."
      source env.sh
-     $SUPERVISORCTL shutdown
+     $SUPERVISORCTL stop all
    popd
 }
 
