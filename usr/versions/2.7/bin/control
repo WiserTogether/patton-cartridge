@@ -7,6 +7,7 @@ source "${OPENSHIFT_PATTON_DIR}/usr/versions/${OPENSHIFT_PYTHON_VERSION}/lib/wis
 
 SUPERVISORD="${VE_ROOT}/bin/supervisord -c ${OPENSHIFT_PATTON_DIR}etc/supervisord.conf"
 SUPERVISORCTL="${VE_ROOT}/bin/supervisorctl  -c ${OPENSHIFT_PATTON_DIR}etc/supervisord.conf"
+PIDFILE="${OPENSHIFT_PATTON_RUN_DIR}supervisor.pid"
 
 # For backwards compatibility
 export APPDIR=$OPENSHIFT_PATTON_DIR
@@ -40,9 +41,26 @@ function stop() {
     fi
 
    pushd $OPENSHIFT_REPO_DIR > /dev/null
-     echo "Shutting down the supervisor."
-     source env.sh
-     $SUPERVISORCTL shutdown
+      echo "Shutting down the supervisor."
+      source env.sh
+      $SUPERVISORCTL shutdown
+      echo "Waiting roughly 6 seconds for $PIDFILE to be removed after child processes exit"
+      for sleep in  2 2 2 last; do
+          if [ ! -e $PIDFILE ] ; then
+              echo "Supervisord exited as expected in under $total_sleep seconds"
+              break
+          else
+              if [[ $sleep -eq "last" ]] ; then
+                  echo "Supervisord still working on shutting down. Killing it with SIGKILL"
+                  killall -s 9 supervisord
+                  unlink $PIDFILE
+              else
+                  sleep $sleep
+                  total_sleep=$(( $total_sleep + $sleep ))
+              fi
+
+          fi
+      done
    popd
 }
 
