@@ -18,15 +18,15 @@ function create_supervisor_config() {
 
     ensure_user_env_var
 
-    if [ -f "Procfile" ]; then
-      honcho check --app-root ${OPENSHIFT_REPO_DIR} --procfile ${OPENSHIFT_REPO_DIR}Procfile 2> /dev/null
+    if [ -f "${PROJECT_PROCFILE}" ]; then
+      honcho check --app-root ${OPENSHIFT_REPO_DIR} --procfile ${PROJECT_PROCFILE} 2> /dev/null
       if [[ $? == 0 ]]; then
 
-       echo Creating supervisord.conf from Procfile
+       echo Creating supervisord.conf from ${PROJECT_PROCFILE}
 
        honcho export \
          --app-root ${OPENSHIFT_REPO_DIR} \
-         --procfile ${OPENSHIFT_REPO_DIR}Procfile \
+         --procfile ${PROJECT_PROCFILE} \
          --log $OPENSHIFT_PATTON_LOG_DIR \
          --port $OPENSHIFT_PATTON_PORT \
          -a ${OPENSHIFT_APP_NAME} \
