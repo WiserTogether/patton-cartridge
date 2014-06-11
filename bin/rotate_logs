@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd $OPENSHIFT_PATTON_LOG_DIR
+ 
+find . -type f -name "*.log" -size +1k | xargs tar -czvf backup_logs_$(date +%Y-%m-%d_%H-%M-%S).tar.gz
+find . -type f -name "*.log" -size +1k -exec rm {} \;
+find . -type f -name "backup_logs_*" -mtime +30 -exec rm {} \;
+ 
+cd -
