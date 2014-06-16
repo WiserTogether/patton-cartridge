@@ -21,13 +21,14 @@ function install_rpm() {
     popd
 }
 
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-devel-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gcrypt-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gcrypt-devel-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gnutls-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gnutls-devel-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-nss-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-nss-devel-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-openssl-1.2.16-2.el6.x86_64.rpm"
-install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-openssl-devel-1.2.16-2.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-devel-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gcrypt-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gcrypt-devel-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gnutls-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-gnutls-devel-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-nss-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-nss-devel-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-openssl-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirrors.kernel.org/fedora-epel/6/x86_64/xmlsec1-openssl-devel-1.2.19-3.el6.x86_64.rpm"
+
