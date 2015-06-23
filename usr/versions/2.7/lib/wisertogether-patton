@@ -40,7 +40,8 @@ function create_supervisor_config() {
 
 function is_running() {
    pushd $OPENSHIFT_REPO_DIR > /dev/null
-   if [ -w ${OPENSHIFT_PATTON_RUN_DIR}supervisor.sock ];
+   pid=${OPENSHIFT_PATTON_RUN_DIR}supervisor.pid
+   if [ -f ${pid} ] && (kill -0 $(cat ${pid}));
    then
     return 0
    else
