@@ -21,13 +21,13 @@ function install_rpm() {
     popd
 }
 
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-devel-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-gcrypt-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-gcrypt-devel-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-gnutls-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-gnutls-devel-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-nss-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-nss-devel-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-openssl-1.2.19-3.el6.x86_64.rpm"
-install_rpm "https://kojipkgs.fedoraproject.org/packages/xmlsec1/1.2.19/3.el6/x86_64/xmlsec1-openssl-devel-1.2.19-3.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-devel-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-gcrypt-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-gcrypt-devel-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-gnutls-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-gnutls-devel-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-nss-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-nss-devel-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-openssl-1.2.20-4.el6.x86_64.rpm"
+install_rpm "http://mirror.cogentco.com/pub/linux/centos/6/os/x86_64/Packages/xmlsec1-openssl-devel-1.2.20-4.el6.x86_64.rpm"
