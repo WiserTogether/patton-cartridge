@@ -30,6 +30,7 @@ function create_supervisor_config() {
          --log $OPENSHIFT_PATTON_LOG_DIR \
          --port $OPENSHIFT_PATTON_PORT \
          -a ${OPENSHIFT_APP_NAME} \
+         -u ${USER} \
          supervisord ${OPENSHIFT_PYTHON_DIR}etc/supervisor.d/
      fi
     fi
